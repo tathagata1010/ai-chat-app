@@ -45,7 +45,7 @@ function LoginScreen() {
 
   return (
     <div className="flex justify-center items-center h-screen">
-      <div className="w-full max-w-md bg-[#202e4e] min-h-[485px] shadow-md rounded px-14 pt-6 pb-8 mb-4">
+      <div className="w-full max-w-md bg-[#1a294e] min-h-[485px] shadow-md rounded px-14 pt-6 pb-8 mb-4">
         <form onSubmit={handleSubmit}>
           <h2 className="text-3xl text-center font-bold text-[#bcd1ff] mb-6">
             Login
