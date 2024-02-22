@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { AiOutlineUser, AiOutlineRobot } from "react-icons/ai";
+import {
+  AiOutlineUser,
+  AiOutlineRobot,
+  AiOutlinePaperClip,
+} from "react-icons/ai";
+import { SiSendinblue } from "react-icons/si"; // Assuming SiSendinblue is the icon for the send button
 
 function Chat() {
   const [inputText, setInputText] = useState("");
@@ -68,6 +73,12 @@ function Chat() {
     setInputText("");
   };
 
+  const handleFileUpload = (e) => {
+    const file = e.target.files[0];
+    // Handle file upload logic here
+    console.log("Uploaded file:", file);
+  };
+
   return (
     <div className="flex h-screen bg-slate-900 text-white">
       {/* Left pane for conversations */}
@@ -108,6 +119,9 @@ function Chat() {
                   message.sender === "user" ? "justify-end" : "justify-start"
                 }`}
               >
+                {message.sender !== "user" && (
+                  <AiOutlineRobot size={24} color="white" className="mr-2" />
+                )}
                 <div
                   className={`py-2 px-3 rounded ${
                     message.sender === "user"
@@ -117,10 +131,8 @@ function Chat() {
                 >
                   {message.message}
                 </div>
-                {message.sender === "user" ? (
+                {message.sender === "user" && (
                   <AiOutlineUser size={24} color="white" className="ml-2" />
-                ) : (
-                  <AiOutlineRobot size={24} color="white" className="mr-2" />
                 )}
               </div>
             ))
@@ -134,20 +146,37 @@ function Chat() {
 
         {/* Input field and send button */}
         <div className="mt-4 flex items-center">
-          <input
-            type="text"
-            value={inputText}
-            onChange={handleInputChange}
-            onKeyDown={handleKeyDown}
-            className="flex-1 border rounded-l py-2 px-4 focus:outline-none bg-gray-900 border-gray-800 border-solid text-gray-200 focus:border-slate-800"
-            placeholder="Type your message..."
-          />
-          <button
-            onClick={handleSendMessage}
-            className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-r focus:outline-none"
-          >
-            Send
-          </button>
+          <div className="relative flex-1">
+            <input
+              type="text"
+              value={inputText}
+              onChange={handleInputChange}
+              onKeyDown={handleKeyDown}
+              className="border rounded-l py-2 px-4 h-auto focus:outline-none bg-gray-900 border-gray-800 border-solid text-gray-200 focus:border-slate-800 w-full pl-10 pr-12"
+              placeholder="Type your message..."
+            />
+            <button
+              onClick={handleSendMessage}
+              className="absolute top-2 right-3 text-white rounded-r align-middle focus:outline-none"
+            >
+              <SiSendinblue className="h-[22px] w-[22px] " />
+            </button>
+            <label
+              className="absolute left-3 top-2 cursor-pointer"
+              htmlFor="file-upload"
+            >
+              <AiOutlinePaperClip
+                className="h-[25px] w-[25px] "
+                color="white"
+              />
+            </label>
+            <input
+              type="file"
+              id="file-upload"
+              className="hidden"
+              onChange={handleFileUpload}
+            />
+          </div>
         </div>
       </div>
     </div>
